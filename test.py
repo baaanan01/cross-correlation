@@ -1,25 +1,8 @@
-from curses import keyname
-import random;
-from math import ceil
-import sys
-from collections import defaultdict
-
-d={}
-
-with open('products.txt') as f:
-        for line in f:
-            items = line.strip().split(' ')
-            for i in items:
-                stripe = defaultdict(int)
-                for j in items:
-                    if i != j:
-                        pair = i + ' ' + j
-                        # if pair in d:
-                        #     d[pair] +=1
-                        # else:
-                        #     d[pair] = 1
-                        d[pair] = 1
-                        stripe[j] += 1
-
-                # print('%s\t%s' % (i, stripe_to_str(stripe)))
-print(d)
+a_dict = {'Информатика': ['70(л)', '20(пр)', '20(лаб)'], 'Физика': ['10(л)', '-', '10(лаб)'], 'Физкультура': ['-', '-', '100(лаб)']}
+to_int = lambda x: int('0'+''.join([e for e in x if e.isdigit()]))
+for k,v in a_dict.items():
+    print(f'{k}={sum([to_int(e) for e in v])}')
+# ...
+# Информатика=110
+# Физика=20
+# Физкультура=100

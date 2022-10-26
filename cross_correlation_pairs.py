@@ -12,61 +12,51 @@ def stripe_to_str(dct):
 
 items_file = open('products.txt', 'r')
 
-# with open('products.txt') as f:
-#     for line in f:
-#         items = line.strip().split(' ')
-#         for i in items:
-#             stripe = defaultdict(int)
-#             for j in items:
-#                 if i != j:
-#                     stripe[j] += 1
-
-#             print('%s\t%s' % (i, stripe_to_str(stripe)))
-
-d = {}
-
 def mapper():
+    with open('map.txt', 'w') as f:
+        f.write('')
     with open('products.txt') as f:
         for line in f:
             items = line.strip().split(' ')
             for i in items:
-                stripe = defaultdict(int)
+                d = {}
                 for j in items:
                     if i != j:
                         pair = i + ' ' + j
-                        # if pair in d:
-                        #     d[pair] +=1
-                        # else:
-                        #     d[pair] = 1
                         d[pair] = 1
-                        stripe[j] += 1
-
-                print('%s\t%s' % (i, stripe_to_str(stripe)))
-    print(d)
+                with open('map.txt', 'a') as f:
+                    for key, value in d.items():
+                        new_str = key + ' : ' + str(value) + '\n'
+                        f.write(new_str)
+                # print('%s\t%s' % (i, stripe_to_str(stripe)))
+    # print(d)
     # for key, value in d.items():
     #     print(key, ' : ', value)
 
 def reducer():
-    # for i in range(len(d)):
-    reduced_d = {}
-    for (products, value) in d.items():
-        if products in d.keys():
-            #if the value is already in list, add current value to the sum
-            reduced_d[products] += value
-        else:
-            #if the value is not yet in list, create an entry
-            reduced_d[products] = value
-    print(1)
+    d = {}
+    with open('map.txt') as f:
+        for line in f:
+            products = line.split(' : ')[0]
+            value = int(line.split(' : ')[1][0:1])
+            if products in d.keys():
+                d[products] += value
+            else:
+                d[products] = value
+    with open('reduce.txt', 'w') as f:
+        for key, value in d.items():
+            new_str = key + ' : ' + str(value) + '\n'
+            f.write(new_str)
+    # for (products, value) in d.items():
+    #     if products in d.keys():
+    #         #if the value is already in list, add current value to the sum
+    #         reduced_d[products] += value
+    #     else:
+    #         #if the value is not yet in list, create an entry
+    #         reduced_d[products] = value
+    # print(1)
 
 
-def red():      
-    resultdict = {}                                                                       
-    for key in d:                               
-        try:
-            resultdict[key] += d[key]        
-        except KeyError:                                   
-            resultdict[key] = d[key]   
-    print(resultdict)
 
 # with open('products.txt') as f:
 #     for line in f:
@@ -86,9 +76,8 @@ def red():
 #         print(keys,values)
 #         print(keys_test)
 
-mapper()
-# reducer()
-# red()
+# mapper()
+reducer()
 
-# Нужно доделать reducer, чтобы он на вход получал словарь d, в котором на данный момент к каждому ключу идёт значение 1.
-# А на выходе из reducer мы должны получить словарь, в котором просуммируются все единички у одинаковых пар.
+
+# Нужно доделать reducer, чтобы он на вход получал словарь d, в котором на данный момент к каждому ключу идёт значение 1. А на выходе из reducer мы должны получить словарь, в котором просуммируются все единички у одинаковых пар.
