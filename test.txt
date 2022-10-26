@@ -1,0 +1,24 @@
+a b 
+a b a c
+
+milk cake coffee
+
+milk cake:1
+milk coffee:1
+cake milk:1
+cake coffee: 1
+coffee milk: 1
+coffee cake: 1
+
+milk pear cake
+
+...
+milk cake: 1
+cake milk: 1
+...
+
+[cake,milk,1]
+{'cake milk':1}
+достать ключ
+распарсить по пробелу
+
